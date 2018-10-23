@@ -4,8 +4,7 @@
 
 Thanks for your interest in Nowsta :-) we really appreciate you taking the time
 to work on this coding challenge for us. We expect it to take no longer than a
-few hours or so, although if you choose to do all the phases it could easily
-take longer.
+few hours max.
 
 ## The task
 
@@ -32,16 +31,14 @@ following fields:
 One test is included to start you off, but please feel free to modify or add as
 many as you'd like.
 
-The deliverable is your fork of this repository.
+The deliverable is your fork of this repository (no need to create a PR), or zip
+up your solution and send it via email.
 
 ## Objectives
 
 - Use git! Please commit often so it's easy to follow your train of thought and
   iterations
-- Implement as many phases as you'd like, but quality > quantity
-  - The more the better, but do try to stay within the time constraint (we don't
-    want to spend too much of your time). If you have to make sacrifices due to
-    time, we'd prefer to see three phases done right than six hacked together.
+- Implement as many phases as you'd like, but quality > quantity!
 - Make the tests pass, and add any tests to cover any change in specification
 - Try to keep the code as clean, readable, and DRY as possible
 - Efficiency isn't a main concern here, but a solution is certainly possible in
@@ -50,7 +47,7 @@ The deliverable is your fork of this repository.
 ## Running it
 
 1.  Fork this repository to your personal GitHub account. (It's a private repo,
-    so it won't show up publicly in your profile.)
+    so it won't show up publicly in your profile.) Or, just clone it locally.
 2.  Run `bundle install` in this directory to install the necessary gems
     (rspec).
 3.  Run `bundle exec rspec overtime_spec.rb` to run the tests (they should fail)
@@ -150,52 +147,5 @@ than in Phase 3.
 
 Implement and test this behavior by allowing a user of the calculator to specify
 the `double_daily_overtime_threshold`.
-
-## Phase 5
-
-You're becoming an expert in overtime law! Bringing us back to the programming
-world, we admit we made it a little easy for you to determine what punchcards
-belong to what days and weeks. In the real world, all we know are start and end
-times, so we must compute the day and week indices ourselves.
-
-Implement and test this behavior by removing the `day` and `week` fields from
-`Punchcard`, and replacing them with `start_time` and `end_time`, both Time
-types. You may assume that Sunday is the first day of the week.
-
-**Hint:** You may still keep some internal representation with the `day` and
-`week` fields, which may allow you to keep your main `calculate` algorithm the
-same or very similar.
-
-**Warning!** Punchcards may span the length of a day or week! For example, if
-someone works from Friday 8PM - Saturday 2 AM in one job, while they worked a
-single 6 hour shift, it actually counts as 4 hours for Friday and 2 hours for
-Saturday. This means someone who works a 14 hour shift may not get any overtime
-at all if it falls within the right range.
-
-## Phase 6
-
-Here's a curveball you may have expected: the cutoff between days is actually
-not always as nice as midnight.
-
-Above, whenever it says "week" or "day", these words actually have specific
-meanings that can vary from company to company. A company can decide that their
-workweek starts on Tuesdays at 8 AM. A week is thus defined as a 168-hour
-interval after this weekday and start hour, and a day is defined as a 24 hour
-period after this start hour.
-
-As a quick example on how this interacts with Phase 5... let's say a company
-pays daily overtime at 8 hours and starts their weeks on Tuesdays, 8 AM. This
-means that if someone starts a shift Friday morning at 4 AM, and works until 1
-PM that day, they are not eligible for overtime because technically they worked
-from 4 AM - 8 AM (4 hours) for the previous day ("Thursday"), and 8 AM - 1 PM (5
-hours) for the current day (Friday).
-
-Similarly, if someone worked 10 hours on Saturday, 10 hours on Sunday, 10 hours
-on Monday, and 12 hours on Tuesday (9 AM - 9 PM), they would not qualify for any
-weekly overtime because the week "cutoff" is Tuesday 8 AM -- in the first
-workweek they would have worked 30 hours, and 12 so far in the second one.
-
-Implement and test this behavior by allowing a user of the calculator to specify
-the `week_start_hour` and `week_start_day`.
 
 ### Got this far? Ask us how much weirder overtime law can get ;)
