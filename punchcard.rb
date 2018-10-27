@@ -3,6 +3,8 @@ class Punchcard
     @day = day
     @week = week
     @hours_worked = hours_worked
+    @regular_hours = 0
+    @overtime_hours = 0
   end
 
   attr_reader :day, :week, :hours_worked

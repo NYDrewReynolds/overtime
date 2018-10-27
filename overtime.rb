@@ -4,9 +4,21 @@ class OvertimeCalculator
   end
 
   def calculate
-    punchcards.each do |punchcard|
-      punchcard.regular_hours = 1
-      punchcard.overtime_hours = 2
+    cards_grouped_by_week = punchcards.group_by(&:week)
+
+    cards_grouped_by_week.each do |grouping|
+      hours_worked_this_week_so_far = 0
+      grouping[1].each do |punchcard|
+
+        punchcard.hours_worked.times do
+          if hours_worked_this_week_so_far < 40
+            punchcard.regular_hours += 1
+            hours_worked_this_week_so_far += 1
+          else
+            punchcard.overtime_hours += 1
+          end
+        end
+      end
     end
   end
 

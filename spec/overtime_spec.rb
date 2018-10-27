@@ -1,5 +1,5 @@
-require_relative "./punchcard"
-require_relative "./overtime"
+require_relative "../punchcard"
+require_relative "../overtime"
 
 RSpec.describe OvertimeCalculator do
   let(:instance) { described_class.new(punchcards: punchcards) }
