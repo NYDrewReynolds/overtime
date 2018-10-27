@@ -15,7 +15,7 @@ class OvertimeCalculator
             punchcard.regular_hours += 1
             hours_worked_this_week_so_far += 1
           else
-            punchcard.overtime_hours += 1
+            punchcard.classification == "w-2" ? punchcard.overtime_hours += 1 : punchcard.regular_hours += 1
           end
         end
       end
