@@ -11,6 +11,22 @@ class Punchcard
   attr_reader :day, :week, :hours_worked, :classification
   attr_accessor :regular_hours, :overtime_hours
 
+  def w2?
+    classification == "w-2"
+  end
+
+  def log_hours_over_40(hours)
+    w2? ? add_overtime_hours(hours) : add_regular_hours(hours)
+  end
+
+  def add_overtime_hours(hours)
+    self.overtime_hours += hours
+  end
+
+  def add_regular_hours(hours)
+    self.regular_hours += hours
+  end
+
   def hours
     [regular_hours, overtime_hours]
   end

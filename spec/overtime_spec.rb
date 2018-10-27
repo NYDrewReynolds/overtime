@@ -5,18 +5,7 @@ RSpec.describe OvertimeCalculator do
 
   describe "#calculate" do
     it "computes regular and overtime hours" do
-      punchcards = [
-        Punchcard.new(day: 0, week: 0, hours_worked: 5),   # 0
-        Punchcard.new(day: 1, week: 0, hours_worked: 6),   # 1
-        Punchcard.new(day: 1, week: 0, hours_worked: 2),   # 2
-        Punchcard.new(day: 2, week: 0, hours_worked: 11),  # 3
-        # (nothing on day 3)
-        Punchcard.new(day: 4, week: 0, hours_worked: 9),   # 4
-        Punchcard.new(day: 5, week: 0, hours_worked: 12),  # 5
-        Punchcard.new(day: 6, week: 0, hours_worked: 5, classification: 'w-2'),   # 6
-
-        Punchcard.new(day: 0, week: 1, hours_worked: 8),   # 7
-      ]
+      punchcards = [ Punchcard.new(day: 0, week: 0, hours_worked: 5), Punchcard.new(day: 1, week: 0, hours_worked: 6), Punchcard.new(day: 1, week: 0, hours_worked: 2), Punchcard.new(day: 2, week: 0, hours_worked: 11), Punchcard.new(day: 4, week: 0, hours_worked: 9), Punchcard.new(day: 5, week: 0, hours_worked: 12), Punchcard.new(day: 6, week: 0, hours_worked: 5, classification: 'w-2'), Punchcard.new(day: 0, week: 1, hours_worked: 8) ]
 
       OvertimeCalculator.new(punchcards: punchcards).calculate
 
@@ -42,6 +31,16 @@ RSpec.describe OvertimeCalculator do
       OvertimeCalculator.new(punchcards: punchcards).calculate
 
       expect(punchcards[4].hours).to eq([10, 0])
+    end
+
+    it "accounts for the double overtime threshold" do
+      punchcards = [
+        Punchcard.new(day: 0, week: 0, hours_worked: 10),  # 5
+      ]
+
+      OvertimeCalculator.new(punchcards: punchcards, overtime_threshold: 8).calculate
+
+      expect(punchcards[0].hours).to eq([8, 2])
     end
   end
 end
