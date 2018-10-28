@@ -3,31 +3,31 @@ require_relative "../punchcards_for_week"
 
 RSpec.describe Punchcard do
   describe "#w2?" do
-    it 'returns true if the classification is w-2' do
+    it "returns true if the classification is w-2" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 10, classification: "w-2")
       expect(punchcard.w2?).to eq true
     end
 
-    it 'returns false if the classification is not w-2' do
+    it "returns false if the classification is not w-2" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 10, classification: "1099")
       expect(punchcard.w2?).to eq false
     end
   end
 
   describe "#log_hours_over_40" do
-    context 'classification is w-2' do
+    context "classification is w-2" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 10, classification: "w-2")
 
-      it 'adds overtime hours' do
+      it "adds overtime hours" do
         punchcard.log_hours_over_40(20)
         expect(punchcard.overtime_hours).to eq 20
       end
     end
 
-    context 'classification is 1099' do
+    context "classification is 1099" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 10, classification: "1099")
 
-      it 'adds regular hours' do
+      it "adds regular hours" do
         punchcard.log_hours_over_40(20)
         expect(punchcard.overtime_hours).to eq 0
         expect(punchcard.regular_hours).to eq 20
@@ -39,7 +39,7 @@ RSpec.describe Punchcard do
     context "worked longer than the daily overtime threshold" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 10, classification: "w-2")
 
-      it 'adds overtime hours' do
+      it "adds overtime hours" do
         expect(punchcard).to receive(:add_overtime_hours).with(1)
         punchcard.log_hour(8, [])
       end
@@ -48,7 +48,7 @@ RSpec.describe Punchcard do
     context "have NOT worked longer than the daily overtime threshold" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 1, classification: "w-2")
 
-      it 'adds regular hours' do
+      it "adds regular hours" do
         expect(punchcard).to receive(:add_regular_hours)
         punchcard.log_hour(8, PunchcardsForWeek.new(punchcards: []))
       end
@@ -56,7 +56,7 @@ RSpec.describe Punchcard do
   end
 
   describe "#add_overtime_hours" do
-    it 'adds the specified number of overtime hours' do
+    it "adds the specified number of overtime hours" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 1, classification: "w-2")
       punchcard.add_overtime_hours(2)
 
@@ -66,7 +66,7 @@ RSpec.describe Punchcard do
 
   describe "#add_regular_hours" do
     context "punchcards_for_week is supplied" do
-      it 'logs an hour to the punchcards_for_week' do
+      it "logs an hour to the punchcards_for_week" do
         punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 1, classification: "w-2")
 
         punchcards_for_week = PunchcardsForWeek.new(punchcards: [])
@@ -76,7 +76,7 @@ RSpec.describe Punchcard do
       end
     end
 
-    it 'adds the specified number of overtime hours' do
+    it "adds the specified number of overtime hours" do
       punchcard = Punchcard.new(day: 0, week: 0, hours_worked: 1, classification: "w-2")
       punchcard.add_regular_hours(2)
 
