@@ -38,9 +38,6 @@ class PunchcardsForWeek
         punchcard.hours_worked -= 1
       end
 
-
-
-
     end
   end
 end

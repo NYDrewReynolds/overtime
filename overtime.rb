@@ -13,8 +13,7 @@ class OvertimeCalculator
       PunchcardsForWeek.new(punchcards: cards[1])
     end
 
-    punchcards_for_week.each { |cards_for_week| cards_for_week.calculate_hours(overtime_threshold: overtime_threshold) }
-
+    punchcards_for_week.map { |cards_for_week| cards_for_week.calculate_hours(overtime_threshold: overtime_threshold) }
   end
 
   private

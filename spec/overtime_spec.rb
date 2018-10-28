@@ -49,6 +49,7 @@ RSpec.describe OvertimeCalculator do
         Punchcard.new(day: 3, week: 0, hours_worked: 10),
         Punchcard.new(day: 4, week: 0, hours_worked: 5),
         Punchcard.new(day: 5, week: 0, hours_worked: 10),
+        Punchcard.new(day: 6, week: 0, hours_worked: 4),
       ]
 
       OvertimeCalculator.new(punchcards: punchcards, overtime_threshold: 8).calculate
@@ -59,6 +60,7 @@ RSpec.describe OvertimeCalculator do
       expect(punchcards[3].hours).to eq([8, 2])
       expect(punchcards[4].hours).to eq([5, 0])
       expect(punchcards[5].hours).to eq([3, 7])
+      expect(punchcards[6].hours).to eq([0, 4])
     end
   end
 end
