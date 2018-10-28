@@ -19,15 +19,30 @@ class Punchcard
     w2? ? add_overtime_hours(hours) : add_regular_hours(hours)
   end
 
+  def log_hour(overtime_threshold, punchcards_for_week)
+    worked_longer_than_daily_overtime_threshold?(overtime_threshold) ?
+      add_overtime_hours(1) :
+      add_regular_hours(1, punchcards_for_week: punchcards_for_week)
+  end
+
   def add_overtime_hours(hours)
     self.overtime_hours += hours
   end
 
-  def add_regular_hours(hours)
+  def add_regular_hours(hours, punchcards_for_week: nil)
     self.regular_hours += hours
+
+    if punchcards_for_week
+      punchcards_for_week.log_regular_hour
+    end
+  end
+
+  def worked_longer_than_daily_overtime_threshold?(threshold)
+    hours_worked > threshold
   end
 
   def hours
     [regular_hours, overtime_hours]
   end
+
 end

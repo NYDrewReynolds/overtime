@@ -12,26 +12,9 @@ class PunchcardsForWeek
       until punchcard.hours_worked == 0
 
         if overtime_threshold
-
-          if regular_hours_worked_this_week_so_far < 40
-            if punchcard.regular_hours < overtime_threshold
-              punchcard.regular_hours += 1
-              self.regular_hours_worked_this_week_so_far += 1
-            else
-              punchcard.overtime_hours += 1
-            end
-          else
-            punchcard.overtime_hours += 1
-          end
-
+          reached_40_regular_hours ?  punchcard.add_overtime_hours(1) : punchcard.log_hour(overtime_threshold, self)
         else
-
-          if hours_worked_this_week_so_far < 40
-            punchcard.regular_hours += 1
-          elsif hours_worked_this_week_so_far >= 40
-            punchcard.log_hours_over_40(1)
-          end
-
+          hours_worked_this_week_so_far < 40 ?  punchcard.add_regular_hours(1) : punchcard.log_hours_over_40(1)
         end
 
         self.hours_worked_this_week_so_far += 1
@@ -39,5 +22,17 @@ class PunchcardsForWeek
       end
 
     end
+  end
+
+  def reached_40_regular_hours
+    regular_hours_worked_this_week_so_far >= 40
+  end
+
+  def worked_longer_than_daily_overtime_threshold(punchcard, overtime_threshold)
+    punchcard.hours_worked > overtime_threshold
+  end
+
+  def log_regular_hour
+    self.regular_hours_worked_this_week_so_far += 1
   end
 end
