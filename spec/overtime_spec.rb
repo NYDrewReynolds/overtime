@@ -5,7 +5,15 @@ RSpec.describe OvertimeCalculator do
 
   describe "#calculate" do
     it "computes regular and overtime hours" do
-      punchcards = [ Punchcard.new(day: 0, week: 0, hours_worked: 5), Punchcard.new(day: 1, week: 0, hours_worked: 6), Punchcard.new(day: 1, week: 0, hours_worked: 2), Punchcard.new(day: 2, week: 0, hours_worked: 11), Punchcard.new(day: 4, week: 0, hours_worked: 9), Punchcard.new(day: 5, week: 0, hours_worked: 12), Punchcard.new(day: 6, week: 0, hours_worked: 5, classification: 'w-2'), Punchcard.new(day: 0, week: 1, hours_worked: 8) ]
+      punchcards = [ Punchcard.new(day: 0, week: 0, hours_worked: 5),
+                     Punchcard.new(day: 1, week: 0, hours_worked: 6),
+                     Punchcard.new(day: 1, week: 0, hours_worked: 2),
+                     Punchcard.new(day: 2, week: 0, hours_worked: 11),
+                     Punchcard.new(day: 4, week: 0, hours_worked: 9),
+                     Punchcard.new(day: 5, week: 0, hours_worked: 12),
+                     Punchcard.new(day: 6, week: 0, hours_worked: 5, classification: 'w-2'),
+                     Punchcard.new(day: 0, week: 1, hours_worked: 8)
+      ]
 
       OvertimeCalculator.new(punchcards: punchcards).calculate
 
@@ -35,12 +43,22 @@ RSpec.describe OvertimeCalculator do
 
     it "accounts for the double overtime threshold" do
       punchcards = [
-        Punchcard.new(day: 0, week: 0, hours_worked: 10),  # 5
+        Punchcard.new(day: 0, week: 0, hours_worked: 10),
+        Punchcard.new(day: 1, week: 0, hours_worked: 10),
+        Punchcard.new(day: 2, week: 0, hours_worked: 10),
+        Punchcard.new(day: 3, week: 0, hours_worked: 10),
+        Punchcard.new(day: 4, week: 0, hours_worked: 5),
+        Punchcard.new(day: 5, week: 0, hours_worked: 10),
       ]
 
       OvertimeCalculator.new(punchcards: punchcards, overtime_threshold: 8).calculate
 
       expect(punchcards[0].hours).to eq([8, 2])
+      expect(punchcards[1].hours).to eq([8, 2])
+      expect(punchcards[2].hours).to eq([8, 2])
+      expect(punchcards[3].hours).to eq([8, 2])
+      expect(punchcards[4].hours).to eq([5, 0])
+      expect(punchcards[5].hours).to eq([3, 7])
     end
   end
 end

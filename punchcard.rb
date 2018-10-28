@@ -8,8 +8,8 @@ class Punchcard
     @overtime_hours = 0
   end
 
-  attr_reader :day, :week, :hours_worked, :classification
-  attr_accessor :regular_hours, :overtime_hours
+  attr_reader :day, :week,  :classification
+  attr_accessor :regular_hours, :overtime_hours, :hours_worked
 
   def w2?
     classification == "w-2"
